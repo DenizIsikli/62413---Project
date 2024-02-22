@@ -1,24 +1,35 @@
-﻿using System.Text;
+﻿using System;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace _62413___Project
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
+        private Client client;
+
         public MainWindow()
         {
             InitializeComponent();
+            client = new Client();
+            client.MessageReceived += Client_MessageReceived;
+            client.Connect("127.0.0.1", 8888); // Connect to server at localhost and port 8888
+        }
+
+        private void ButtonSend_Click(object sender, RoutedEventArgs e)
+        {
+            client.SendMessage(textBoxMessage.Text);
+            textBoxMessage.Clear();
+        }
+
+        private void ButtonDisconnect_Click(object sender, RoutedEventArgs e)
+        {
+            client.Disconnect();
+            Application.Current.Shutdown();
+        }
+
+        private void Client_MessageReceived(string message)
+        {
+            Dispatcher.Invoke(() => listBoxChat.Items.Add(message));
         }
     }
 }
