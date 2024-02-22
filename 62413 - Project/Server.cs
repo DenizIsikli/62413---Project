@@ -39,6 +39,8 @@ namespace _62413___Project
             NetworkStream stream = client.GetStream();
             byte[] buffer = new byte[1024];
             int bytesReceived;
+            // generate a random name for the client
+            string name = "Client" + new Random().Next(1000, 9999);
 
             try
             {
@@ -46,8 +48,9 @@ namespace _62413___Project
                 while ((bytesReceived = stream.Read(buffer, 0, buffer.Length)) != 0)
                 {
                     string message = Encoding.ASCII.GetString(buffer, 0, bytesReceived);
-                    BroadcastMessage(message, client);
-                }
+                    // Broadcast the received message to all connected clients with the client name, message
+                    BroadcastMessage(name, message);
+                } 
             }
             catch (Exception)
             {
@@ -62,16 +65,16 @@ namespace _62413___Project
         }
 
         // Broadcasts a message to all connected clients except the origin client.
-        private void BroadcastMessage(string message, TcpClient originClient)
+        private void BroadcastMessage(string name, string message)
         {
+            string formattedMessage = $"{name}: {message}";
+            byte[] buffer = Encoding.ASCII.GetBytes(formattedMessage);
+
             foreach (var client in clients)
             {
-                if (client != originClient)
-                {
-                    NetworkStream stream = client.GetStream();
-                    byte[] buffer = Encoding.ASCII.GetBytes(message);
-                    stream.Write(buffer, 0, buffer.Length);
-                }
+                NetworkStream stream = client.GetStream();
+                stream.Write(buffer, 0, buffer.Length);
+                
             }
         }
     }

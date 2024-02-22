@@ -37,12 +37,10 @@ namespace _62413___Project
             // Continuously listen for messages until the connection is closed
             while (true)
             {
-                // Read incoming data from the network stream
                 bytesRead = stream.Read(buffer, 0, buffer.Length);
+                if (bytesRead == 0) break; // This means the client has disconnected.
                 string receivedMessage = Encoding.ASCII.GetString(buffer, 0, bytesRead);
-
-                // Invoke the MessageReceived event to notify subscribers
-                MessageReceived?.Invoke(receivedMessage);
+                MessageReceived?.Invoke(receivedMessage); // Raise the event.
             }
         }
 
