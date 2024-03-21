@@ -22,7 +22,7 @@ namespace _62413___Project
 
             // Use a salt value and specify the hash algorithm and number of iterations
             byte[] salt = Encoding.UTF8.GetBytes("this is my salt");
-            int iterations = 10000; // Adjust the number of iterations as needed
+            int iterations = 10000; // Adjust the number of iterations/rounds to make it more secure
             HashAlgorithmName hashAlgorithm = HashAlgorithmName.SHA256; // Specify the hash algorithm
 
             using (Rfc2898DeriveBytes rfcKey = new Rfc2898DeriveBytes(password, salt, iterations, hashAlgorithm))
