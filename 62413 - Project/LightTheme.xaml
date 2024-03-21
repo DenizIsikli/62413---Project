@@ -2,4 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <SolidColorBrush x:Key="BackgroundBrush" Color="#FFFFFFFF"/>
     <SolidColorBrush x:Key="ForegroundBrush" Color="#FF000000"/>
+    <SolidColorBrush x:Key="TextBoxBorderBrush" Color="#FF000000"/>
+    <SolidColorBrush x:Key="ButtonForegroundBrush" Color="#FF000000"/>
+    <SolidColorBrush x:Key="ButtonBorderBrush" Color="#FF000000"/>
+    <SolidColorBrush x:Key="ChatBackgroundBrush" Color="#FFDDDDDD"/>
 </ResourceDictionary>
