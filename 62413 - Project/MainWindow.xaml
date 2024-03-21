@@ -6,45 +6,70 @@
         xmlns:local="clr-namespace:_62413___Project"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    
+
     <Window.Resources>
-        <!-- Assuming the ThemeSwitch class is static -->
         <local:ThemeSwitch x:Key="ThemeSwitch"/>
     </Window.Resources>
-    
-    <Grid>
+
+    <Grid Background="{DynamicResource BackgroundBrush}">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Enhanced ListBox with DataTemplate for displaying messages -->
-        <ListBox x:Name="listBoxChat" Margin="5">
+        <ToggleButton x:Name="ThemeToggle" Content="Dark Mode"
+                      Checked="ThemeToggle_Checked"
+                      Unchecked="ThemeToggle_Unchecked"
+                      HorizontalAlignment="Right" VerticalAlignment="Top"
+                      Grid.Row="0" Margin="0,10,10,0" Width="90" Height="25"
+                      Background="{DynamicResource BackgroundBrush}"
+                      Foreground="{DynamicResource ForegroundBrush}"/>
+
+        <ListBox x:Name="listBoxChat" Grid.Row="1" Margin="5"
+                 Background="{DynamicResource BackgroundBrush}"
+                 Foreground="{DynamicResource ForegroundBrush}"
+                 BorderBrush="{DynamicResource BorderBrush}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Border Padding="5" CornerRadius="5" Background="White" Margin="2">
+                    <Border Padding="5" CornerRadius="5"
+                            Background="Transparent" Margin="2"
+                            BorderBrush="{DynamicResource BorderBrush}">
                         <StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="12"/>
-                                <TextBlock Text=": " FontSize="12"/>
-                                <TextBlock Text="{Binding Message}" TextWrapping="Wrap" FontSize="12"/>
+                                <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="12"
+                                           Foreground="{DynamicResource ForegroundBrush}"/>
+                                <TextBlock Text=": " FontSize="12"
+                                           Foreground="{DynamicResource ForegroundBrush}"/>
+                                <TextBlock Text="{Binding Message}" TextWrapping="Wrap" FontSize="12"
+                                           Foreground="{DynamicResource ForegroundBrush}"/>
                             </StackPanel>
-                            <TextBlock Text="{Binding Timestamp}" HorizontalAlignment="Left" FontSize="10" FontStyle="Italic" Opacity="0.6"/>
+                            <TextBlock Text="{Binding Timestamp}" HorizontalAlignment="Left" FontSize="10"
+                                       FontStyle="Italic" Opacity="0.6"
+                                       Foreground="{DynamicResource ForegroundBrush}"/>
                         </StackPanel>
                     </Border>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <!-- Input and Send Button Row -->
-        <Border Grid.Row="2" Background="White" Padding="10" CornerRadius="5" Margin="5">
+        <Border Grid.Row="2" Padding="10" CornerRadius="5" Margin="5"
+                Background="{DynamicResource TextBoxBackgroundBrush}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <TextBox x:Name="textBoxMessage" Grid.Column="0" BorderBrush="Black" BorderThickness="1" Padding="5" PreviewKeyDown="TextBoxMessage_PreviewKeyDown"/>
-                <Button x:Name="buttonSend" Grid.Column="1" Content="Send" Click="ButtonSend_Click" Width="75" Height="25" Margin="5,0,0,0"/>
+                <TextBox x:Name="textBoxMessage" Grid.Column="0"
+                         Background="{DynamicResource TextBoxBackgroundBrush}"
+                         Foreground="{DynamicResource TextBoxForegroundBrush}"
+                         PreviewKeyDown="TextBoxMessage_PreviewKeyDown"
+                         Padding="5" BorderThickness="1"/>
+                <Button x:Name="buttonSend" Grid.Column="1" Content="Send"
+                        Click="ButtonSend_Click" Width="75" Height="28" Margin="5,0,0,0"
+                        Background="{DynamicResource ButtonBackgroundBrush}"
+                        Foreground="{DynamicResource ButtonForegroundBrush}"
+                        BorderThickness="1"/>
             </Grid>
         </Border>
     </Grid>

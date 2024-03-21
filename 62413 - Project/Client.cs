@@ -1,17 +1,25 @@
 ﻿using System;
+using System.IO;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Windows.Markup;
 
+
 namespace _62413___Project
 {
     public class Client
     {
+        private Encryption encryption = new();
         private TcpClient? tcpClient;
         private Thread? listenThread;
         public event Action<string>? MessageReceived;
 
+        /// <summary>
+        /// Connects the client to the server.
+        /// </summary>
+        /// <param name="ipAddress"></param>
+        /// <param name="port"></param>
         public void Connect(string ipAddress, int port)
         {
             tcpClient = new TcpClient();
@@ -22,6 +30,9 @@ namespace _62413___Project
             listenThread.Start();
         }
 
+        /// <summary>
+        /// Listen for messages from the server.
+        /// </summary>
         private void ListenForMessages()
         {
             NetworkStream? stream = tcpClient.GetStream();
@@ -37,6 +48,10 @@ namespace _62413___Project
             }
         }
 
+        /// <summary>
+        /// Sends a message to the server.
+        /// </summary>
+        /// <param name="message"></param>
         public void SendMessage(string message)
         {
             byte[]? buffer = Encoding.ASCII.GetBytes(message);
@@ -44,6 +59,9 @@ namespace _62413___Project
             tcpClient?.GetStream().Write(buffer, 0, buffer.Length);
         }
 
+        /// <summary>
+        /// Disconnects the client from the server.
+        /// </summary>
         public void Disconnect()
         {
             tcpClient?.Close();

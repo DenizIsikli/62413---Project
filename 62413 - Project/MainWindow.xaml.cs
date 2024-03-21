@@ -14,23 +14,30 @@ namespace _62413___Project
 
         public MainWindow()
         {
+            _themeSwitch.ApplyTheme("LightTheme.xaml");
             InitializeComponent();
             Task.Run(() => StartServer());
-            ChatMessages = [];
+            ChatMessages = new ObservableCollection<ChatMessage>();
             listBoxChat.ItemsSource = ChatMessages;
             client = new Client();
             client.MessageReceived += Client_MessageReceived;
             client.Connect("127.0.0.1", 8888);
-
-            _themeSwitch.ApplyTheme("LightTheme.xaml");
         }
         
+        /// <summary>
+        /// Starts the server on a separate thread.
+        /// </summary>
         private void StartServer()
         {
             Server server = new();
             server.Start(8888);
         }
 
+        /// <summary>
+        /// Button click event to send a message to the server.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonSend_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(textBoxMessage.Text)) return;
@@ -39,6 +46,11 @@ namespace _62413___Project
             textBoxMessage.Clear();
         }
 
+        /// <summary>
+        /// Textbox key down event to send a message to the server when the enter key is pressed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TextBoxMessage_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter && !string.IsNullOrEmpty(textBoxMessage.Text))
@@ -48,11 +60,20 @@ namespace _62413___Project
             }
         }
 
+        /// <summary>
+        /// Button click event to disconnect the client from the server.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonDisconnect_Click(object sender, RoutedEventArgs e)
         {
             client.Disconnect();
         }
 
+        /// <summary>
+        /// Event handler for when a message is received from the server.
+        /// </summary>
+        /// <param name="message"></param>
         private void Client_MessageReceived(string message)
         {
             var messageParts = message.Split([':'], 2);
@@ -73,17 +94,30 @@ namespace _62413___Project
             }
         }
 
+        /// <summary>
+        /// Event handler for when the theme toggle is checked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ThemeToggle_Checked(object sender, RoutedEventArgs e)
         {
             _themeSwitch.ApplyTheme("DarkTheme.xaml");
         }
 
+        /// <summary>
+        /// Event handler for when the theme toggle is unchecked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ThemeToggle_Unchecked(object sender, RoutedEventArgs e)
         {
             _themeSwitch.ApplyTheme("LightTheme.xaml");
         }
     }
 
+    /// <summary>
+    /// Represents a chat message.
+    /// </summary>
     public class ChatMessage
     {
         public string? Name { get; set; }

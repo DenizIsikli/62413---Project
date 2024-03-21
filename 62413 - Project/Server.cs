@@ -12,6 +12,10 @@ namespace _62413___Project
         private TcpListener? tcpListener;
         private readonly List<TcpClient> clients = [];
 
+        /// <summary>
+        /// Starts the server on a specified port.
+        /// </summary>
+        /// <param name="port"></param>
         public void Start(int port)
         {
             tcpListener = new TcpListener(IPAddress.Any, port);
@@ -29,6 +33,10 @@ namespace _62413___Project
             }
         }
 
+        /// <summary>
+        /// Handles a connected client.
+        /// </summary>
+        /// <param name="client"></param>
         private void HandleClient(TcpClient client)
         {
             NetworkStream? stream = client.GetStream();
@@ -56,6 +64,11 @@ namespace _62413___Project
             }
         }
 
+        /// <summary>
+        /// Broadcasts a message to all connected clients.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="message"></param>
         private void BroadcastMessage(string name, string message)
         {
             if (string.IsNullOrEmpty(message)) return;
