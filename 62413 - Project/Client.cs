@@ -36,14 +36,12 @@ namespace _62413___Project
         private void ListenForMessages()
         {
             NetworkStream? stream = tcpClient.GetStream();
-            byte[]? buffer = new byte[1024];
+            byte[]? buffer = new byte[2048];
             int bytesRead;
 
-            while (true)
+            while ((bytesRead = stream.Read(buffer, 0, buffer.Length)) > 0)
             {
-                bytesRead = stream.Read(buffer, 0, buffer.Length);
-                if (bytesRead == 0) break;
-                string? receivedMessage = Encoding.ASCII.GetString(buffer, 0, bytesRead);
+                string? receivedMessage = Encoding.UTF8.GetString(buffer, 0, bytesRead);
                 MessageReceived?.Invoke(receivedMessage);
             }
         }
@@ -54,7 +52,7 @@ namespace _62413___Project
         /// <param name="message"></param>
         public void SendMessage(string message)
         {
-            byte[]? buffer = Encoding.ASCII.GetBytes(message);
+            byte[]? buffer = Encoding.UTF8.GetBytes(message);
             if (buffer.Length == 0) return;
             tcpClient?.GetStream().Write(buffer, 0, buffer.Length);
         }

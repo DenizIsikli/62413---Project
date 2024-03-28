@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_62413___Project"
         mc:Ignorable="d"
+        FontFamily="Verdana"
         Title="MainWindow" Height="450" Width="800">
 
     <Window.Resources>
@@ -41,7 +42,7 @@
                                            Foreground="{DynamicResource ForegroundBrush}"/>
                                 <TextBlock Text=": " FontSize="12"
                                            Foreground="{DynamicResource ForegroundBrush}"/>
-                                <TextBlock Text="{Binding Message}" TextWrapping="Wrap" FontSize="12"
+                                <TextBlock Text="{Binding Message}" TextWrapping="WrapWithOverflow" FontSize="12"
                                            Foreground="{DynamicResource ForegroundBrush}"/>
                             </StackPanel>
                             <TextBlock Text="{Binding Timestamp}" HorizontalAlignment="Left" FontSize="10"
