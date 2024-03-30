@@ -9,6 +9,8 @@ namespace _62413___Project
 {
     public class Server
     {
+        private readonly Generator generator = new();
+        public string name = Generator.GenerateName();
         private TcpListener? tcpListener;
         private readonly List<TcpClient> clients = [];
 
@@ -28,7 +30,9 @@ namespace _62413___Project
                 clients?.Add(client);
                 Console.WriteLine("Client connected");
 
-                Thread? clientThread = new(() => HandleClient(client));
+                string? client_name = name;
+
+                Thread? clientThread = new(() => HandleClient(client, name));
                 clientThread?.Start();
             }
         }
@@ -37,13 +41,11 @@ namespace _62413___Project
         /// Handles a connected client.
         /// </summary>
         /// <param name="client"></param>
-        private void HandleClient(TcpClient client)
+        private void HandleClient(TcpClient client, string name)
         {
             NetworkStream? stream = client.GetStream();
             byte[]? buffer = new byte[1024];
             int bytesReceived;
-
-            string? name = "Client " + new Random().Next(1000, 9999) + " (You)";
 
             try
             {

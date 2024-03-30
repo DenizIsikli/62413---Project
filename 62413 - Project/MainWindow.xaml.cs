@@ -8,7 +8,7 @@ namespace _62413___Project
 {
     public partial class MainWindow : Window
     {
-        private Client client;
+        private readonly Client client = new();
         private readonly ThemeSwitch _themeSwitch = new();
         public ObservableCollection<ChatMessage> ChatMessages { get; set; }
 
@@ -19,7 +19,6 @@ namespace _62413___Project
             Task.Run(() => StartServer());
             ChatMessages = new ObservableCollection<ChatMessage>();
             listBoxChat.ItemsSource = ChatMessages;
-            client = new Client();
             client.MessageReceived += Client_MessageReceived;
             client.Connect("127.0.0.1", 8888);
         }
@@ -83,7 +82,7 @@ namespace _62413___Project
                 {
                     Name = messageParts[0].Trim(),
                     Message = messageParts[1].Trim(),
-                    Timestamp = DateTime.Now.ToString("HH:mm:ss")
+                    Timestamp = DateTime.Now.ToString("HH:mm:ss"),
                 };
 
                 Dispatcher.Invoke(() =>
