@@ -29,8 +29,9 @@ namespace _62413___Project
         private void NameChange(object sender, RoutedEventArgs e)
         {
             nameInsert = LoginBox.Text;
+            Generator.ClientName = nameInsert;
             ChatScreen p = new ChatScreen();
-            this.NavigationService.Navigate(p, nameInsert);
+            this.NavigationService.Navigate(p);
         }
 
         public string GetLoginName()

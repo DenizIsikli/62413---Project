@@ -8,9 +8,10 @@ namespace _62413___Project
 {
     public class Generator
     {
+        public static string ClientName { get; set; }
         public static string GenerateName()
         {
-            return "Client " + new Random().Next(1000, 9999);
+            return ClientName;
         }
     }
 }
