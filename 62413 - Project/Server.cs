@@ -9,8 +9,8 @@ namespace _62413___Project
 {
     public class Server
     {
-        private readonly Generator generator = new();
-        public string name = Generator.GenerateName();
+        private readonly Handler generator = new();
+        public string name = Handler.GenerateName();
         private TcpListener? tcpListener;
         private readonly List<TcpClient> clients = [];
 

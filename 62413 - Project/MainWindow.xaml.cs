@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Printing.IndexedProperties;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -9,7 +10,9 @@ namespace _62413___Project
     public partial class MainWindow : Window
     {
         private readonly Client client = new();
+        private readonly Handler generator = new();
         private readonly ThemeSwitch _themeSwitch = new();
+
         public ObservableCollection<ChatMessage> ChatMessages { get; set; }
 
         public MainWindow()
@@ -73,7 +76,39 @@ namespace _62413___Project
         /// Event handler for when a message is received from the server.
         /// </summary>
         /// <param name="message"></param>
-        private void Client_MessageReceived(string message)
+        private async void Client_MessageReceived(string message)
+        {
+            var parts = message.Split(' ', 2);
+            var commandKey = parts[0];
+            var commandParam = parts.Length > 1 ? parts[1] : string.Empty;
+
+            if (generator.botCommands.TryGetValue(commandKey, out var commandFunc))
+            {
+                var response = await commandFunc(commandParam);
+                SendMessageToChat(response);
+            } else
+            {
+                ProcessNormalMessage(message);
+            }
+        }
+
+        private void SendMessageToChat(string message)
+        {
+            var chatMessage = new ChatMessage
+            {
+                Name = "Bot",
+                Message = message,
+                Timestamp = DateTime.Now.ToString("HH:mm:ss"),
+            };
+
+            Dispatcher.Invoke(() =>
+            {
+                ChatMessages.Add(chatMessage);
+                listBoxChat.ScrollIntoView(chatMessage);
+            });
+        }
+
+        private void ProcessNormalMessage(string message)
         {
             var messageParts = message.Split([':'], 2);
             if (messageParts.Length == 2)
