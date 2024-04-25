@@ -19,9 +19,10 @@ namespace _62413___Project
             };
         }
 
+        public static string ClientName { get; set; }
         public static string GenerateName()
         {
-            return "Client " + new Random().Next(1000, 9999);
+            return ClientName;
         }
     }
 }

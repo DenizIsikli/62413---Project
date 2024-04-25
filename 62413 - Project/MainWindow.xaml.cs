@@ -16,7 +16,7 @@ namespace _62413___Project
         {
             _themeSwitch.ApplyTheme("LightTheme.xaml");
             InitializeComponent();
-            Main.Content = new LoginScreen(); /// Set LoginScreen as start page
+            Main.Content = new LoginScreen();
         }
 
         /// <summary>
