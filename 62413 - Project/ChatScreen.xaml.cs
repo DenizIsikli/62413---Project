@@ -1,28 +1,41 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Printing.IndexedProperties;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
 namespace _62413___Project
 {
-    public partial class MainWindow : Window
+    /// <summary>
+    /// Interaction logic for ChatScreen.xaml
+    /// </summary>
+    public partial class ChatScreen : Page
     {
+        private readonly Client client = new();
         private readonly ThemeSwitch _themeSwitch = new();
-
-        public MainWindow()
+        public ObservableCollection<ChatMessage> ChatMessages { get; set; }
+        public ChatScreen()
         {
             _themeSwitch.ApplyTheme("LightTheme.xaml");
             InitializeComponent();
-<<<<<<< HEAD
             Task.Run(() => StartServer());
             ChatMessages = new ObservableCollection<ChatMessage>();
             listBoxChat.ItemsSource = ChatMessages;
             client.MessageReceived += Client_MessageReceived;
             client.Connect("127.0.0.1", 8888);
         }
-        
+
         /// <summary>
         /// Starts the server on a separate thread.
         /// </summary>
@@ -73,49 +86,7 @@ namespace _62413___Project
         /// Event handler for when a message is received from the server.
         /// </summary>
         /// <param name="message"></param>
-        private async void Client_MessageReceived(string message)
-        {
-            message = message.Trim();
-
-            if (message.StartsWith("!"))
-            {
-                var parts = message.Substring(1).Split(' ', 2);
-                var commandKey = parts[0];
-                var commandParam = parts.Length > 1 ? parts[1] : string.Empty;
-
-                if (generator.botCommands.TryGetValue(commandKey, out var commandFunc))
-                {
-                    var response = await commandFunc(commandParam);
-                    BotMessage(response);
-                }
-                else
-                {
-                    BotMessage("Invalid command.");
-                }
-            }
-            else
-            {
-                ProcessNormalMessage(message);
-            }
-        }
-
-        private void BotMessage(string message)
-        {
-            var chatMessage = new ChatMessage
-            {
-                Name = "Bot",
-                Message = message,
-                Timestamp = DateTime.Now.ToString("HH:mm:ss"),
-            };
-
-            Dispatcher.Invoke(() =>
-            {
-                ChatMessages.Add(chatMessage);
-                listBoxChat.ScrollIntoView(chatMessage);
-            });
-        }
-
-        private void ProcessNormalMessage(string message)
+        private void Client_MessageReceived(string message)
         {
             var messageParts = message.Split([':'], 2);
             if (messageParts.Length == 2)
@@ -133,9 +104,6 @@ namespace _62413___Project
                     listBoxChat.ScrollIntoView(chatMessage);
                 });
             }
-=======
-            Main.Content = new LoginScreen(); /// Set LoginScreen as start page
->>>>>>> 7ef9b493e493c2511d08c4a3457c2d16dfa8dcda
         }
 
         /// <summary>
@@ -157,5 +125,15 @@ namespace _62413___Project
         {
             _themeSwitch.ApplyTheme("LightTheme.xaml");
         }
+    }
+
+    /// <summary>
+    /// Represents a chat message.
+    /// </summary>
+    public class ChatMessage
+    {
+        public string? Name { get; set; }
+        public string? Message { get; set; }
+        public string? Timestamp { get; set; }
     }
 }
