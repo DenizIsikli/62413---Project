@@ -78,21 +78,31 @@ namespace _62413___Project
         /// <param name="message"></param>
         private async void Client_MessageReceived(string message)
         {
-            var parts = message.Split(' ', 2);
-            var commandKey = parts[0];
-            var commandParam = parts.Length > 1 ? parts[1] : string.Empty;
+            message = message.Trim();
 
-            if (generator.botCommands.TryGetValue(commandKey, out var commandFunc))
+            if (message.StartsWith("!"))
             {
-                var response = await commandFunc(commandParam);
-                SendMessageToChat(response);
-            } else
+                var parts = message.Substring(1).Split(' ', 2);
+                var commandKey = parts[0];
+                var commandParam = parts.Length > 1 ? parts[1] : string.Empty;
+
+                if (generator.botCommands.TryGetValue(commandKey, out var commandFunc))
+                {
+                    var response = await commandFunc(commandParam);
+                    BotMessage(response);
+                }
+                else
+                {
+                    BotMessage("Invalid command.");
+                }
+            }
+            else
             {
                 ProcessNormalMessage(message);
             }
         }
 
-        private void SendMessageToChat(string message)
+        private void BotMessage(string message)
         {
             var chatMessage = new ChatMessage
             {
