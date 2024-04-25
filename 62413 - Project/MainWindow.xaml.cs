@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Printing.IndexedProperties;
+using System.Reflection.Emit;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -15,7 +16,7 @@ namespace _62413___Project
         {
             _themeSwitch.ApplyTheme("LightTheme.xaml");
             InitializeComponent();
-<<<<<<< HEAD
+
             Task.Run(() => StartServer());
             ChatMessages = new ObservableCollection<ChatMessage>();
             listBoxChat.ItemsSource = ChatMessages;
@@ -86,11 +87,11 @@ namespace _62413___Project
                 if (generator.botCommands.TryGetValue(commandKey, out var commandFunc))
                 {
                     var response = await commandFunc(commandParam);
-                    BotMessage(response);
+                    SendMessageToChat("Bot", response);
                 }
                 else
                 {
-                    BotMessage("Invalid command.");
+                    SendMessageToChat("Error", "Unknown command: " + commandKey);
                 }
             }
             else
@@ -99,11 +100,11 @@ namespace _62413___Project
             }
         }
 
-        private void BotMessage(string message)
+        private void SendMessageToChat(string senderName, string message)
         {
             var chatMessage = new ChatMessage
             {
-                Name = "Bot",
+                Name = senderName,
                 Message = message,
                 Timestamp = DateTime.Now.ToString("HH:mm:ss"),
             };
@@ -133,9 +134,8 @@ namespace _62413___Project
                     listBoxChat.ScrollIntoView(chatMessage);
                 });
             }
-=======
-            Main.Content = new LoginScreen(); /// Set LoginScreen as start page
->>>>>>> 7ef9b493e493c2511d08c4a3457c2d16dfa8dcda
+
+            Main.Content = new LoginScreen();
         }
 
         /// <summary>
