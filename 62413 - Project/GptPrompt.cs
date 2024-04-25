@@ -40,7 +40,6 @@ namespace _62413___Project
                 var body = await response.Content.ReadAsStringAsync();
                 Console.WriteLine(body);
 
-                // Assuming the API returns a JSON object with a property "answer"
                 var json = JsonDocument.Parse(body);
                 var answer = json.RootElement.GetProperty("answer").GetString();
 
