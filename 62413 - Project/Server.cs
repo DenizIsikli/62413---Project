@@ -10,7 +10,7 @@ namespace _62413___Project
     public class Server
     {
         private readonly Handler generator = new();
-        public string name = Handler.GenerateName();
+        public string name = Handler.Name;
         private TcpListener? tcpListener;
         private readonly List<TcpClient> clients = [];
 

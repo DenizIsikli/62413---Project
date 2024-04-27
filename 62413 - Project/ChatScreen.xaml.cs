@@ -25,25 +25,21 @@ namespace _62413___Project
         private readonly Client client = new();
         private readonly ThemeSwitch _themeSwitch = new();
         public ObservableCollection<ChatMessage> ChatMessages { get; set; }
-        public ChatScreen()
+        public ChatScreen(string serverUrl, int serverPort)
         {
             _themeSwitch.ApplyTheme("LightTheme.xaml");
             InitializeComponent();
-            Task.Run(() => StartServer());
+         
             ChatMessages = new ObservableCollection<ChatMessage>();
             listBoxChat.ItemsSource = ChatMessages;
             client.MessageReceived += Client_MessageReceived;
-            client.Connect("127.0.0.1", 8888);
+            client.Connect(serverUrl, serverPort);
+
+            ServerUrl.Text = serverUrl+":"+serverPort;
+
+
         }
 
-        /// <summary>
-        /// Starts the server on a separate thread.
-        /// </summary>
-        private void StartServer()
-        {
-            Server server = new();
-            server.Start(8888);
-        }
 
         /// <summary>
         /// Button click event to send a message to the server.
@@ -54,7 +50,8 @@ namespace _62413___Project
         {
             if (string.IsNullOrEmpty(textBoxMessage.Text)) return;
             textBoxMessage.Focus();
-            client.SendMessage(textBoxMessage.Text);
+            string encryptedMessage = Encryption.EncryptString(textBoxMessage.Text, Handler.Password);
+            client.SendMessage(encryptedMessage);
             textBoxMessage.Clear();
         }
 
@@ -88,13 +85,14 @@ namespace _62413___Project
         /// <param name="message"></param>
         private void Client_MessageReceived(string message)
         {
+
             var messageParts = message.Split([':'], 2);
             if (messageParts.Length == 2)
             {
                 var chatMessage = new ChatMessage
                 {
                     Name = messageParts[0].Trim(),
-                    Message = messageParts[1].Trim(),
+                    Message = Encryption.DecryptString(messageParts[1].Trim(), Handler.Password),
                     Timestamp = DateTime.Now.ToString("HH:mm:ss"),
                 };
 

@@ -19,10 +19,8 @@ namespace _62413___Project
             };
         }
 
-        public static string ClientName { get; set; }
-        public static string GenerateName()
-        {
-            return ClientName;
-        }
+        public static string Name { get; set; }
+        public static string Password { get; set; }
+        
     }
 }

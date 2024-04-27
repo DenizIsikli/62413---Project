@@ -10,7 +10,6 @@ namespace _62413___Project
 {
     public class Client
     {
-        private Encryption encryption = new();
         private TcpClient? tcpClient;
         private Thread? listenThread;
         public event Action<string>? MessageReceived;
