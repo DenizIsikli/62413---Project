@@ -85,14 +85,15 @@ namespace _62413___Project
         /// <param name="message"></param>
         private void Client_MessageReceived(string message)
         {
-
             var messageParts = message.Split([':'], 2);
             if (messageParts.Length == 2)
             {
+                string encryptedMessage = messageParts[1].Trim();
+                string decryptedMessage = Encryption.DecryptString(encryptedMessage, Handler.Password);
                 var chatMessage = new ChatMessage
                 {
                     Name = messageParts[0].Trim(),
-                    Message = Encryption.DecryptString(messageParts[1].Trim(), Handler.Password),
+                    Message = decryptedMessage,
                     Timestamp = DateTime.Now.ToString("HH:mm:ss"),
                 };
 
