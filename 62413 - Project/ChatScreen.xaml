@@ -15,6 +15,9 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <ListBox x:Name="listBoxChat" Grid.Row="1" Margin="5,36,5,5"
+                 Width="Auto"
+                 HorizontalContentAlignment="Stretch"
+                 ScrollViewer.HorizontalScrollBarVisibility="Auto"
                  Background="{DynamicResource BackgroundBrush}"
                  Foreground="{DynamicResource ForegroundBrush}"
                  BorderBrush="{DynamicResource BorderBrush}">
@@ -24,18 +27,20 @@
                             Background="Transparent" Margin="2"
                             BorderBrush="{DynamicResource BorderBrush}">
                         <StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="12"
-                                           Foreground="{DynamicResource ForegroundBrush}"/>
-                                <TextBlock Text=": " FontSize="12"
-                                           Foreground="{DynamicResource ForegroundBrush}"/>
-                                <TextBlock Text="{Binding Message}" TextWrapping="WrapWithOverflow" FontSize="12"
-                                           Foreground="{DynamicResource ForegroundBrush}"/>
-                            </StackPanel>
+                            <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="12"
+                                       Foreground="{DynamicResource ForegroundBrush}">
+                                <TextBlock.TextDecorations>
+                                    <TextDecoration Location="Underline" />
+                                </TextBlock.TextDecorations>
+                            </TextBlock>
+                            <TextBlock Text="{Binding Message}" TextWrapping="Wrap" FontSize="12"
+                                       Foreground="{DynamicResource ForegroundBrush}" 
+                                       Width="{Binding ActualWidth, ElementName=listBoxChat}"
+                                       Padding="0,0,50,0"/>
                             <TextBlock Text="{Binding Timestamp}" HorizontalAlignment="Left" FontSize="10"
-                                       FontStyle="Italic" Opacity="0.6"
-                                       Foreground="{DynamicResource ForegroundBrush}"/>
+                                       FontStyle="Italic" Opacity="0.6" Foreground="{DynamicResource ForegroundBrush}"/>
                         </StackPanel>
+
                     </Border>
                 </DataTemplate>
             </ListBox.ItemTemplate>
@@ -60,7 +65,7 @@
                         BorderThickness="1"/>
             </Grid>
         </Border>
-        <TextBox HorizontalAlignment="Left" Margin="75,9,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="216" Name="ServerUrl" Grid.Row="1" />
-        <Label Content="Server url" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Grid.RowSpan="2" Foreground="{DynamicResource ButtonForegroundBrush}"/>
+        <TextBox HorizontalAlignment="Left" Margin="75,9,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="216" Name="ServerUrl" Grid.Row="1" Background="{DynamicResource BackgroundBrush}" Foreground="{DynamicResource ButtonForegroundBrush}"/>
+        <Label Content="Server url" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Grid.RowSpan="2" Background="{DynamicResource BackgroundBrush}" Foreground="{DynamicResource ButtonForegroundBrush}"/>
     </Grid>
 </Page>
