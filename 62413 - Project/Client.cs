@@ -14,6 +14,7 @@ namespace _62413___Project
         private Thread? listenThread;
         public event Action<string>? MessageReceived;
 
+
         /// <summary>
         /// Connects the client to the server.
         /// </summary>
@@ -51,6 +52,7 @@ namespace _62413___Project
         /// <param name="message"></param>
         public void SendMessage(string message)
         {
+            message = Handler.Name + ": " + message;    
             byte[]? buffer = Encoding.UTF8.GetBytes(message);
             if (buffer.Length == 0) return;
             tcpClient?.GetStream().Write(buffer, 0, buffer.Length);

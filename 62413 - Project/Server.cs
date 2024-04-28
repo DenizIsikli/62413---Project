@@ -9,8 +9,6 @@ namespace _62413___Project
 {
     public class Server
     {
-        private readonly Handler generator = new();
-        public string name = Handler.Name;
         private TcpListener? tcpListener;
         private readonly List<TcpClient> clients = [];
 
@@ -30,9 +28,7 @@ namespace _62413___Project
                 clients?.Add(client);
                 Console.WriteLine("Client connected");
 
-                string? client_name = name;
-
-                Thread? clientThread = new(() => HandleClient(client, name));
+                Thread? clientThread = new(() => HandleClient(client));
                 clientThread?.Start();
             }
         }
@@ -41,7 +37,7 @@ namespace _62413___Project
         /// Handles a connected client.
         /// </summary>
         /// <param name="client"></param>
-        private void HandleClient(TcpClient client, string name)
+        private void HandleClient(TcpClient client)
         {
             NetworkStream? stream = client.GetStream();
             byte[]? buffer = new byte[1024];
@@ -52,7 +48,7 @@ namespace _62413___Project
                 while ((bytesReceived = stream.Read(buffer, 0, buffer.Length)) != 0)
                 {
                     string? message = Encoding.ASCII.GetString(buffer, 0, bytesReceived);
-                    BroadcastMessage(name, message);
+                    BroadcastMessage(message);
                 } 
             }
             catch (Exception)
@@ -71,11 +67,11 @@ namespace _62413___Project
         /// </summary>
         /// <param name="name"></param>
         /// <param name="message"></param>
-        private void BroadcastMessage(string name, string message)
+        private void BroadcastMessage(string message)
         {
             if (string.IsNullOrEmpty(message)) return;
 
-            string? formattedMessage = $"{name}: {message}";
+            string formattedMessage = message;
             byte[]? buffer = Encoding.ASCII.GetBytes(formattedMessage);
 
             foreach (var client in clients)
