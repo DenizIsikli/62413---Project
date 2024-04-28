@@ -42,7 +42,6 @@ namespace _62413___Project
                 return;
             }
 
-
             Handler.Name = m_name;
             Handler.Password = m_password;
 
@@ -68,12 +67,7 @@ namespace _62413___Project
             Server server = new();
             server.Start(8888);
         }
-      
-        /// <summary>
-        /// Joins a server with the specified name
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+
         private void JoinServer(object sender, RoutedEventArgs e)
         {
             if (!ValidateFields(false))
@@ -87,6 +81,30 @@ namespace _62413___Project
             int serverPort = int.Parse(m_server.Split(':')[1]);
             ChatScreen chatScreen = new ChatScreen(serverUrl, serverPort);
             this.NavigationService.Navigate(chatScreen);
+
+        }
+
+        private bool ValidateFields(bool createServer)
+        {
+            if (string.IsNullOrWhiteSpace(m_name))
+            {
+                MessageBox.Show("Please enter a name.");
+                return false;
+            }
+            if (string.IsNullOrWhiteSpace(m_password))
+            {
+                MessageBox.Show("Please enter a password.");
+                return false;
+            }
+            if (createServer)
+            {
+                if (string.IsNullOrWhiteSpace(m_server))
+                {
+                    MessageBox.Show("Please enter a server.");
+                    return false;
+                }
+            }
+            return true;
         }
 
         /// <summary>

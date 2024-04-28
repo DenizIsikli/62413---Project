@@ -1,6 +1,6 @@
 version: "2"
-authtoken: <YOUR_AUTHTOKEN>
+authtoken: 2djzCepnOPUv7sIfpcDdxR28LcY_3WWgkdv5WzwRjAdW5K8q7
 tunnels:
   my_tunnel:
     addr: 8888
-    proto: http
+    proto: tcp
