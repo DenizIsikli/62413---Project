@@ -23,6 +23,7 @@ namespace _62413___Project
     public partial class ChatScreen : Page
     {
         private readonly Client client = new();
+        private readonly Handler handler = new();
         private readonly ThemeSwitch _themeSwitch = new();
         public ObservableCollection<ChatMessage> ChatMessages { get; set; }
         public ChatScreen(string serverUrl, int serverPort)
@@ -36,8 +37,6 @@ namespace _62413___Project
             client.Connect(serverUrl, serverPort);
 
             ServerUrl.Text = serverUrl+":"+serverPort;
-
-
         }
 
 
@@ -82,26 +81,87 @@ namespace _62413___Project
         /// Event handler for when a message is received from the server.
         /// </summary>
         /// <param name="message"></param>
-        private void Client_MessageReceived(string message)
+        private async void Client_MessageReceived(string message)
         {
             var messageParts = message.Split([':'], 2);
             if (messageParts.Length == 2)
             {
                 string encryptedMessage = messageParts[1].Trim();
                 string decryptedMessage = Encryption.DecryptString(encryptedMessage, Handler.Password);
-                var chatMessage = new ChatMessage
-                {
-                    Name = messageParts[0].Trim(),
-                    Message = decryptedMessage,
-                    Timestamp = DateTime.Now.ToString("HH:mm:ss"),
-                };
 
-                Dispatcher.Invoke(() =>
+                if (decryptedMessage.StartsWith("!gpt"))
                 {
-                    ChatMessages.Add(chatMessage);
-                    listBoxChat.ScrollIntoView(chatMessage);
-                });
+                    await ExecuteBotCommand(decryptedMessage);
+                }
+                else
+                {
+                    ProcessNormalMessage(messageParts[0].Trim(), decryptedMessage);
+                }
             }
+        }
+
+        /// <summary>
+        /// Executes a bot command.
+        /// </summary>
+        /// <param name="decryptedMessage"></param>
+        /// <returns></returns>
+        private async Task ExecuteBotCommand(string decryptedMessage)
+        {
+            var parts = decryptedMessage.Split(' ', 2);
+            var commandKey = parts[0].Substring(1);
+            var commandParam = parts.Length > 1 ? parts[1] : string.Empty;
+
+            if (handler.botCommands.TryGetValue(commandKey, out var commandFunc))
+            {
+                var response = await commandFunc(commandParam);
+                SendMessageToChat("Bot", response);
+            }
+            else
+            {
+                SendMessageToChat("Bot", "Unknown command: " + commandKey);
+            }
+        }
+
+        /// <summary>
+        /// Sends a message to the chat.
+        /// </summary>
+        /// <param name="senderName"></param>
+        /// <param name="message"></param>
+        private void SendMessageToChat(string senderName, string message)
+        {
+            var chatMessage = new ChatMessage
+            {
+                Name = senderName,
+                Message = message,
+                Timestamp = DateTime.Now.ToString("HH:mm:ss"),
+            };
+
+            Dispatcher.Invoke(() =>
+            {
+                ChatMessages.Add(chatMessage);
+                listBoxChat.ScrollIntoView(chatMessage);
+            });
+        }
+
+        /// <summary>
+        /// Processes a normal message.
+        /// </summary>
+        /// <param name="senderName"></param>
+        /// <param name="decryptedMessage"></param>
+        private void ProcessNormalMessage(string senderName, string decryptedMessage)
+        {
+            var chatMessage = new ChatMessage
+            {
+                Name = senderName,
+                Message = decryptedMessage,
+                Timestamp = DateTime.Now.ToString("HH:mm:ss"),
+            };
+
+            Dispatcher.Invoke(() =>
+            {
+                ChatMessages.Add(chatMessage);
+                listBoxChat.ScrollIntoView(chatMessage);
+            });
         }
 
         /// <summary>

@@ -33,23 +33,23 @@ namespace _62413___Project
                     { "X-RapidAPI-Key", "f4093ae77fmsh3b5b518992b9c97p136562jsn8eb575f33b51" },
                     { "X-RapidAPI-Host", "simple-chatgpt-api.p.rapidapi.com" },
                 },
-                Content = new StringContent(prompt, Encoding.UTF8, "application/json")
-                {
-                    Headers =
-                    {
-                        ContentType = new MediaTypeHeaderValue("application/json")
-                    }
-                }
+                Content = new StringContent(JsonSerializer.Serialize(new { question = prompt }), Encoding.UTF8, "application/json")
             };
             using (var response = await client.SendAsync(request))
             {
-	            response.EnsureSuccessStatusCode();
-	            var body = await response.Content.ReadAsStringAsync();
-                Console.WriteLine(body);
-                return body;
-            }
+                response.EnsureSuccessStatusCode();
+                var body = await response.Content.ReadAsStringAsync();
 
-            return "Could not get the response.";
+                var result = JsonSerializer.Deserialize<Dictionary<string, string>>(body);
+                if (result != null && result.ContainsKey("answer"))
+                {
+                    return result["answer"];
+                }
+                else
+                {
+                    return "Could not get a valid response.";
+                }
+            }
         }
-    }
+    }    
 }

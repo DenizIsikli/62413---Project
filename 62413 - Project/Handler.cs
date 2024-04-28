@@ -14,9 +14,9 @@ namespace _62413___Project
         public Handler()
         {
             botCommands = new Dictionary<string, Func<string, Task<string>>>()
-            {
-                { "!gpt", async (prompt) => await gptPrompt.GptRapidApiAsync(prompt) }
-            };
+        {
+            { "gpt", async (prompt) => await gptPrompt.GptRapidApiAsync(prompt) }
+        };
         }
 
         public static string Name { get; set; }
