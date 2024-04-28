@@ -37,6 +37,12 @@ namespace _62413___Project
         /// <param name="e"></param>
         private void CreateServer(object sender, RoutedEventArgs e)
         {
+            if (!ValidateFields(true))
+            {
+                return;
+            }
+
+
             Handler.Name = m_name;
             Handler.Password = m_password;
 
@@ -70,6 +76,11 @@ namespace _62413___Project
         /// <param name="e"></param>
         private void JoinServer(object sender, RoutedEventArgs e)
         {
+            if (!ValidateFields(false))
+            {
+                return;
+            }
+
             Handler.Name = m_name;
             Handler.Password = m_password;
             string serverUrl = m_server.Split(':')[0];
@@ -106,6 +117,62 @@ namespace _62413___Project
         private void Password_TextChanged(object sender, TextChangedEventArgs e)
         {
             m_password = Password.Text;
+        }
+
+        /// <summary>
+        /// Placeholder for lobby textboxes 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Server_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (Server.Text == "Server address")
+            {
+                Server.Text = "";
+                Server.Foreground = Brushes.Black;
+            }
+        }
+        private void Server_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (Server.Text == "") 
+            {
+                Server.Text = "Server address";
+                Server.Foreground = Brushes.Silver;
+            }
+        }
+
+        private void Name_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (Name.Text == "Name")
+            {
+                Name.Text = "";
+                Name.Foreground = Brushes.Black;
+            }
+        }
+        private void Name_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (Name.Text == "")
+            {
+                Name.Text = "Name";
+                Name.Foreground = Brushes.Silver;
+            }
+        }
+
+        private void Password_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (Password.Text == "Password")
+            {
+                Password.Text = "";
+                Password.Foreground = Brushes.Black;
+            }
+        }
+        private void Password_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (Password.Text == "")
+            {
+                Password.Text = "Password";
+                Password.Foreground = Brushes.Silver;
+            }
         }
     }
 }
