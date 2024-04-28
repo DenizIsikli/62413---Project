@@ -9,14 +9,13 @@
       Title="LoginScreen">
 
     <Grid Background="{DynamicResource BackgroundBrush}" Margin="4,0,-4,0">
-        <Label Content="Input your name" HorizontalAlignment="Left" Margin="242,28,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Margin="231,59,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="Name_TextChanged" Name ="Name"/>
-        <Button Content="Join a server" HorizontalAlignment="Left" Margin="231,165,0,0" VerticalAlignment="Top" Click="JoinServer" Width="120"/>
-        <Button Content="Create a server" HorizontalAlignment="Left" Margin="424,165,0,0" VerticalAlignment="Top" Click="CreateServer" Width="111"/>
-        <TextBox HorizontalAlignment="Left" Margin="231,139,0,0" TextWrapping="Wrap" Text="Server address" VerticalAlignment="Top" Width="120" TextChanged="Server_TextChanged" Name="Server"/>
-        <Label Content="Or" HorizontalAlignment="Left" Margin="376,162,0,0" VerticalAlignment="Top"/>
-        <Label Content="Input password" HorizontalAlignment="Left" Margin="430,28,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Margin="419,59,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="121" TextChanged="Password_TextChanged" Name="Password"/>
-
+        <Label Content="Input your name" HorizontalAlignment="Left" Margin="242,28,0,0" VerticalAlignment="Top" Foreground="{DynamicResource ForegroundBrush}"/>
+        <TextBox HorizontalAlignment="Left" Margin="231,59,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="Name_TextChanged" Name ="Name" Foreground="{DynamicResource ForegroundBrush}"/>
+        <Button Content="Join a server" HorizontalAlignment="Left" Margin="231,165,0,0" VerticalAlignment="Top" Click="JoinServer" Width="120" Foreground="{DynamicResource ForegroundBrush}"/>
+        <Button Content="Create a server" HorizontalAlignment="Left" Margin="424,165,0,0" VerticalAlignment="Top" Click="CreateServer" Width="111" Foreground="{DynamicResource ForegroundBrush}"/>
+        <TextBox HorizontalAlignment="Left" Margin="231,139,0,0" TextWrapping="Wrap" Text="Server address" VerticalAlignment="Top" Width="120" TextChanged="Server_TextChanged" Name="Server" Foreground="{DynamicResource ForegroundBrush}"/>
+        <Label Content="Or" HorizontalAlignment="Left" Margin="376,162,0,0" VerticalAlignment="Top" Foreground="{DynamicResource ForegroundBrush}"/>
+        <Label Content="Input password" HorizontalAlignment="Left" Margin="430,28,0,0" VerticalAlignment="Top" Foreground="{DynamicResource ForegroundBrush}"/>
+        <TextBox HorizontalAlignment="Left" Margin="419,59,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="121" TextChanged="Password_TextChanged" Name="Password" Foreground="{DynamicResource ForegroundBrush}"/>
     </Grid>
 </Page>
