@@ -68,6 +68,11 @@ namespace _62413___Project
             server.Start(8888);
         }
 
+        /// <summary>
+        /// Joins a server with the specified server address
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void JoinServer(object sender, RoutedEventArgs e)
         {
             if (!ValidateFields(false))
@@ -81,9 +86,13 @@ namespace _62413___Project
             int serverPort = int.Parse(m_server.Split(':')[1]);
             ChatScreen chatScreen = new ChatScreen(serverUrl, serverPort);
             this.NavigationService.Navigate(chatScreen);
-
         }
 
+        /// <summary>
+        /// Validates the fields in the lobby
+        /// </summary>
+        /// <param name="createServer"></param>
+        /// <returns></returns>
         private bool ValidateFields(bool createServer)
         {
             if (string.IsNullOrWhiteSpace(m_name))
