@@ -30,6 +30,11 @@ namespace _62413___Project
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Creates a Ngrok tunnel and starts a server on the local machine
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CreateServer(object sender, RoutedEventArgs e)
         {
             Handler.Name = m_name;
@@ -47,16 +52,22 @@ namespace _62413___Project
 
             ChatScreen chatScreen = new ChatScreen(serverUrl, serverPort);
             this.NavigationService.Navigate(chatScreen);
-
         }
+
+        /// <summary>
+        /// Starts a server on the local machine with the specified port
+        /// </summary>
         private void StartServer()
         {
             Server server = new();
             server.Start(8888);
-
         }
       
-
+        /// <summary>
+        /// Joins a server with the specified name
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void JoinServer(object sender, RoutedEventArgs e)
         {
             Handler.Name = m_name;
@@ -65,25 +76,36 @@ namespace _62413___Project
             int serverPort = int.Parse(m_server.Split(':')[1]);
             ChatScreen chatScreen = new ChatScreen(serverUrl, serverPort);
             this.NavigationService.Navigate(chatScreen);
-
         }
 
+        /// <summary>
+        /// Updates the name of the user
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Name_TextChanged(object sender, TextChangedEventArgs e)
         {
             m_name = Name.Text;
-
         }
 
+        /// <summary>
+        /// Updates the server address
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Server_TextChanged(object sender, TextChangedEventArgs e)
         {
             m_server = Server.Text;
-
         }
 
+        /// <summary>
+        /// Updates the password of the user
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Password_TextChanged(object sender, TextChangedEventArgs e)
         {
             m_password = Password.Text;
-
         }
     }
 }
