@@ -7,6 +7,8 @@ using System.Net.Http.Headers;
 using System.Net.Http.Headers;
 using System.Net.Http;
 using System.Text.Json;
+using System.Net.Mime;
+using System.Reflection.PortableExecutable;
 
 
 namespace _62413___Project
@@ -31,20 +33,23 @@ namespace _62413___Project
                     { "X-RapidAPI-Key", "f4093ae77fmsh3b5b518992b9c97p136562jsn8eb575f33b51" },
                     { "X-RapidAPI-Host", "simple-chatgpt-api.p.rapidapi.com" },
                 },
-                Content = new StringContent($"{{\"question\": \"{prompt}\"}}", Encoding.UTF8, "application/json")
+                Content = new StringContent(prompt, Encoding.UTF8, "application/json")
+                {
+                    Headers =
+                    {
+                        ContentType = new MediaTypeHeaderValue("application/json")
+                    }
+                }
             };
-
             using (var response = await client.SendAsync(request))
             {
-                response.EnsureSuccessStatusCode();
-                var body = await response.Content.ReadAsStringAsync();
+	            response.EnsureSuccessStatusCode();
+	            var body = await response.Content.ReadAsStringAsync();
                 Console.WriteLine(body);
-
-                var json = JsonDocument.Parse(body);
-                var answer = json.RootElement.GetProperty("answer").GetString();
-
-                return answer ?? "Sorry, I couldn't get the response.";
+                return body;
             }
+
+            return "Could not get the response.";
         }
     }
 }
