@@ -15,6 +15,8 @@ namespace _62413___Project
             this.projectRoot = Path.GetFullPath(projectRoot);
             this.ngrokPath = this.projectRoot + "ngrok.exe";
             StopAllTunnels();
+            // wait for ngrok to stop
+            System.Threading.Thread.Sleep(2000);
         }
 
         public void StopAllTunnels()
@@ -51,7 +53,7 @@ namespace _62413___Project
                 Console.WriteLine(line);
 
                 // Check if the line contains the URL
-                if (line.Contains("url=https://"))
+                if (line.Contains("url=tcp://"))
                 {
                     int startIndex = line.IndexOf("url=") + 4;
                     int endIndex = line.IndexOf(' ', startIndex);
