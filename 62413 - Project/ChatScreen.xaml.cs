@@ -64,8 +64,7 @@ namespace _62413___Project
         {
             if (e.Key == Key.Enter && !string.IsNullOrEmpty(textBoxMessage.Text))
             {
-                client.SendMessage(textBoxMessage.Text);
-                textBoxMessage.Clear();
+                ButtonSend_Click(sender, e);
             }
         }
 
