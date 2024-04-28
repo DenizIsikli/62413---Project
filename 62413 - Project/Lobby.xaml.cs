@@ -32,6 +32,12 @@ namespace _62413___Project
 
         private void CreateServer(object sender, RoutedEventArgs e)
         {
+            if (!ValidateFields(true))
+            {
+                return;
+            }
+
+
             Handler.Name = m_name;
             Handler.Password = m_password;
 
@@ -59,6 +65,11 @@ namespace _62413___Project
 
         private void JoinServer(object sender, RoutedEventArgs e)
         {
+            if (!ValidateFields(false))
+            {
+                return;
+            }
+
             Handler.Name = m_name;
             Handler.Password = m_password;
             string serverUrl = m_server.Split(':')[0];
@@ -67,6 +78,30 @@ namespace _62413___Project
             this.NavigationService.Navigate(chatScreen);
 
         }
+
+        private bool ValidateFields(bool createServer)
+        {
+            if (string.IsNullOrWhiteSpace(m_name))
+            {
+                MessageBox.Show("Please enter a name.");
+                return false;
+            }
+            if (string.IsNullOrWhiteSpace(m_password))
+            {
+                MessageBox.Show("Please enter a password.");
+                return false;
+            }
+            if (createServer)
+            {
+                if (string.IsNullOrWhiteSpace(m_server))
+                {
+                    MessageBox.Show("Please enter a server.");
+                    return false;
+                }
+            }
+            return true;
+        }
+
 
         private void Name_TextChanged(object sender, TextChangedEventArgs e)
         {
