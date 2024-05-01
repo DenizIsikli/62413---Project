@@ -17,11 +17,19 @@ namespace _62413___Project
     {
         private readonly HttpClient? client;
 
+        /// <summary>
+        /// HttpClient for making requests to the GPT-3 API.
+        /// </summary>
         public GptPrompt()
         {
             client = new HttpClient();
         }
 
+        /// <summary>
+        /// Makes a request to the GPT-3 API to generate a response to a prompt.
+        /// </summary>
+        /// <param name="prompt"></param>
+        /// <returns></returns>
         public async Task<string> GptRapidApiAsync(string prompt)
         {
             var request = new HttpRequestMessage

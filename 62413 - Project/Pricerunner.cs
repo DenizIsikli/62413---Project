@@ -11,6 +11,11 @@ namespace _62413___Project
 {
     internal class Pricerunner
     {
+        /// <summary>
+        /// Web scraper to fetch the top 10 products from Pricerunner
+        /// </summary>
+        /// <param name="searchQuery"></param>
+        /// <returns></returns>
         public async Task<string> GetTopTenProducts(string searchQuery)
         {
             // Construct the URL to fetch from Pricerunner

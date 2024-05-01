@@ -9,13 +9,16 @@ namespace _62413___Project
         private string ngrokPath;
         private string projectRoot;
 
+        /// <summary>
+        /// Ngrok constructor
+        /// </summary>
         public Ngrok()
         {
             string projectRoot = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\");
             this.projectRoot = Path.GetFullPath(projectRoot);
             this.ngrokPath = this.projectRoot + "ngrok.exe";
             StopAllTunnels();
-            // wait for ngrok to stop
+            // Delay to make sure all ngrok processes are killed
             System.Threading.Thread.Sleep(2000);
         }
 
@@ -27,7 +30,10 @@ namespace _62413___Project
             }
         }
 
-
+        /// <summary>
+        /// Starts an ngrok tunnel and returns the URL
+        /// </summary>
+        /// <returns></returns>
         public string StartNgrokTunnel()
         {
 
