@@ -89,9 +89,30 @@ namespace _62413___Project
                 string encryptedMessage = messageParts[1].Trim();
                 string decryptedMessage = Encryption.DecryptString(encryptedMessage, Handler.Password);
 
-                if (decryptedMessage.StartsWith("!gpt"))
+                if (decryptedMessage.StartsWith("!"))
                 {
-                    await ExecuteBotCommand(decryptedMessage);
+                    int endOfCommandIndex = decryptedMessage.IndexOf(' ');
+                    string command;
+                    string parameters = "";
+
+                    if (endOfCommandIndex != -1)
+                    {
+                        command = decryptedMessage.Substring(1, endOfCommandIndex).Trim();
+                        parameters = decryptedMessage.Substring(endOfCommandIndex + 1).Trim();
+                    }
+                    else
+                    {
+                        command = decryptedMessage.Substring(1).Trim();
+                    }
+
+                    if (string.IsNullOrEmpty(parameters))
+                    {
+                        SendMessageToChat("System", $"Missing parameters for command '{command}'.");
+                    }
+                    else
+                    {
+                        await ExecuteBotCommand(command, parameters);
+                    }
                 }
                 else
                 {
@@ -105,20 +126,16 @@ namespace _62413___Project
         /// </summary>
         /// <param name="decryptedMessage"></param>
         /// <returns></returns>
-        private async Task ExecuteBotCommand(string decryptedMessage)
+        private async Task ExecuteBotCommand(string command, string parameters)
         {
-            var parts = decryptedMessage.Split(' ', 2);
-            var commandKey = parts[0].Substring(1);
-            var commandParam = parts.Length > 1 ? parts[1] : string.Empty;
-
-            if (handler.botCommands.TryGetValue(commandKey, out var commandFunc))
+            if (handler.botCommands.TryGetValue(command, out var commandFunc))
             {
-                var response = await commandFunc(commandParam);
+                string response = await commandFunc(parameters);
                 SendMessageToChat("Bot", response);
             }
             else
             {
-                SendMessageToChat("Bot", "Unknown command: " + commandKey);
+                SendMessageToChat("System", $"Unknown command: {command}");
             }
         }
 
