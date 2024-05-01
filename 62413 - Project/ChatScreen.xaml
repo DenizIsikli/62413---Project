@@ -14,6 +14,13 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+        <ToggleButton x:Name="ThemeToggle" Content="Dark Mode"
+              Checked="ThemeToggle_Checked"
+              Unchecked="ThemeToggle_Unchecked"
+              HorizontalAlignment="Right" VerticalAlignment="Top"
+              Grid.Row="0" Margin="0,10,35,0" Width="90" Height="25"
+              Background="{DynamicResource BackgroundBrush}"
+              Foreground="{DynamicResource ForegroundBrush}"/>
         <ListBox x:Name="listBoxChat" Grid.Row="1" Margin="5,36,5,5"
                  Width="Auto"
                  HorizontalContentAlignment="Stretch"
@@ -65,7 +72,7 @@
                         BorderThickness="1"/>
             </Grid>
         </Border>
-        <TextBox HorizontalAlignment="Left" Margin="75,9,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="216" Name="ServerUrl" Grid.Row="1" Background="{DynamicResource BackgroundBrush}" Foreground="{DynamicResource ButtonForegroundBrush}"/>
+        <TextBox HorizontalAlignment="Left" Margin="75,-25,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="216" Name="ServerUrl" Grid.Row="1" Background="{DynamicResource BackgroundBrush}" Foreground="{DynamicResource ButtonForegroundBrush}"/>
         <Label Content="Server url" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Grid.RowSpan="2" Background="{DynamicResource BackgroundBrush}" Foreground="{DynamicResource ButtonForegroundBrush}"/>
     </Grid>
 </Page>
