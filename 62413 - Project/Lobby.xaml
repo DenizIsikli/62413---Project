@@ -9,9 +9,9 @@
       Title="LoginScreen">
 
     <Grid Background="{DynamicResource BackgroundBrush}" Margin="4,0,-4,0">
-        <TextBox HorizontalAlignment="Left" Margin="231,59,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="Name_TextChanged" Name ="Name" Background="{DynamicResource BackgroundBrush}" Foreground="{DynamicResource ForegroundBrush}"/>
-        <TextBox HorizontalAlignment="Left" Margin="419,59,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="121" TextChanged="Password_TextChanged" Name="Password" Background="{DynamicResource BackgroundBrush}" Foreground="{DynamicResource ForegroundBrush}"/>
-        <TextBox HorizontalAlignment="Left" Margin="231,139,0,0" TextWrapping="Wrap" Text="Server address" VerticalAlignment="Top" Width="120" TextChanged="Server_TextChanged" Name="Server" Background="{DynamicResource BackgroundBrush}" Foreground="{DynamicResource ForegroundBrush}"/>
+        <TextBox HorizontalAlignment="Left" Margin="231,59,0,0" TextWrapping="Wrap" Text="Name" VerticalAlignment="Top" Width="120" TextChanged="Name_TextChanged" Name ="Name" GotFocus="Name_GotFocus" LostFocus="Name_LostFocus" Background="{DynamicResource BackgroundBrush}" Foreground="#FF989898"/>
+        <TextBox HorizontalAlignment="Left" Margin="419,59,0,0" TextWrapping="Wrap" Text="Password" VerticalAlignment="Top" Width="121" TextChanged="Password_TextChanged" Name="Password" GotFocus="Password_GotFocus" LostFocus="Password_LostFocus" Background="{DynamicResource BackgroundBrush}" Foreground="#FF989898"/>
+        <TextBox HorizontalAlignment="Left" Margin="231,139,0,0" TextWrapping="Wrap" Text="Server address" VerticalAlignment="Top" Width="120" TextChanged="Server_TextChanged" Name="Server" LostFocus="Server_LostFocus" GotFocus="Server_GotFocus" Background="{DynamicResource BackgroundBrush}" Foreground="#FF989898"/>
         <Button Content="Join a server" HorizontalAlignment="Left" Margin="231,165,0,0" VerticalAlignment="Top" Click="JoinServer" Width="120" Background="{DynamicResource BackgroundBrush}" Foreground="{DynamicResource ForegroundBrush}"/>
         <Button Content="Create a server" HorizontalAlignment="Left" Margin="424,165,0,0" VerticalAlignment="Top" Click="CreateServer" Width="111" Background="{DynamicResource BackgroundBrush}" Foreground="{DynamicResource ForegroundBrush}"/>
         <Label Content="Input your name" HorizontalAlignment="Left" Margin="242,28,0,0" VerticalAlignment="Top" Background="{DynamicResource BackgroundBrush}" Foreground="{DynamicResource ForegroundBrush}"/>
