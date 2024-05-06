@@ -38,7 +38,7 @@ namespace _62413___Project
                 RequestUri = new Uri("https://simple-chatgpt-api.p.rapidapi.com/ask"),
                 Headers =
                 {
-                    { "X-RapidAPI-Key", "f4093ae77fmsh3b5b518992b9c97p136562jsn8eb575f33b51" },
+                    { "X-RapidAPI-Key", "2eced3f581mshfa96752f794ad99p121183jsn338232762482" },
                     { "X-RapidAPI-Host", "simple-chatgpt-api.p.rapidapi.com" },
                 },
                 Content = new StringContent(JsonSerializer.Serialize(new { question = prompt }), Encoding.UTF8, "application/json")
